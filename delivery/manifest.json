@@ -1,0 +1,28 @@
+{
+  "original": "D:/dsh-latest-windows-x64/resources/app.asar",
+  "originalSha256": "983ca71114e6dfd353fc79af5a1f9481a250ee64c2a3c757673029b811b23bc2",
+  "previousPatchedSha256": "74f2299ec824ed8615f335136f9fe1d2debc12d1a2b6069f23f6ece6c7f68fb5",
+  "patchedSha256": "6a4834968271a22ee96daa76b0e43e92820002ded7e44a49c4c37028fc2046fd",
+  "bytes": 132403103,
+  "unchangedPackedFiles": 11468,
+  "addedFiles": [
+    "lib/harness-splash.mjs",
+    "renderer/harness-splash.html",
+    "renderer/harness-splash.webm",
+    "renderer/harness-poster.jpg"
+  ],
+  "video": {
+    "duration": 4,
+    "width": 3840,
+    "height": 2160,
+    "fps": 24,
+    "silent": true,
+    "codec": "vp9",
+    "crf": 14,
+    "bytes": 10927696,
+    "source": "D:/链接解析/results/7689378377203721211/live-photo-4k-repaired.mp4",
+    "resized": false
+  },
+  "startupPolicy": "Original window sizes: centered 960x540 intro and default 1280x820 application; unchanged 4K animation; immediate handoff on UI readiness",
+  "storageRoot": "D:/dsh-latest-windows-x64/resources/harness-local-data"
+}

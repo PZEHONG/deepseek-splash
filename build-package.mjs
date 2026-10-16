@@ -9,7 +9,14 @@ const previousManifest=JSON.parse(fs.readFileSync(path.join(root,'delivery','man
 const currentInstalled=fs.readFileSync(original);
 const currentInstalledHash=crypto.createHash('sha256').update(currentInstalled).digest('hex');
 assert([previousManifest.originalSha256,previousManifest.patchedSha256,previousManifest.previousPatchedSha256].includes(currentInstalledHash),'The installed application changed outside this patch');
-const bytes=fs.readFileSync(path.join(root,'backup','app.original.asar'));
+// 克隆仓库的全新环境没有原始备份：若本机安装的正是原始版本，直接据此生成备份。
+const originalBackupPath=path.join(root,'backup','app.original.asar');
+if(!fs.existsSync(originalBackupPath)){
+  if(currentInstalledHash!==previousManifest.originalSha256)throw new Error('backup/app.original.asar 缺失，且当前安装的不是原始版本（哈希与 manifest.originalSha256 不符），无法自动生成备份。');
+  fs.mkdirSync(path.join(root,'backup'),{recursive:true});
+  fs.copyFileSync(original,originalBackupPath);
+}
+const bytes=fs.readFileSync(originalBackupPath);
 const originalBase=8+bytes.readUInt32LE(4);
 const originalTree=JSON.parse(bytes.subarray(16,16+bytes.readUInt32LE(12)).toString());
 const tree=structuredClone(originalTree);
@@ -18,7 +25,8 @@ const content=(name)=>{const entry=lookup(originalTree,name);return bytes.subarr
 const sha=buffer=>crypto.createHash('sha256').update(buffer).digest('hex');
 assert.equal(sha(bytes),previousManifest.originalSha256);
 const previousBackup=path.join(root,'backup','app.splash-'+currentInstalledHash.slice(0,12)+'.asar');
-if(!fs.existsSync(previousBackup))fs.writeFileSync(previousBackup,currentInstalled);
+// 当前安装即原始版本时与 app.original.asar 内容一致，无需重复快照。
+if(currentInstalledHash!==previousManifest.originalSha256&&!fs.existsSync(previousBackup))fs.writeFileSync(previousBackup,currentInstalled);
 let main=content('lib/main.js').toString();
 assert(!main.includes('harness-splash.mjs'),'An intro patch is already installed');
 const importAnchor='//#region ../../packages/util/home-paths/lib/index.js';

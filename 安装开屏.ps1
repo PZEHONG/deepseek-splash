@@ -1,4 +1,4 @@
-﻿$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Stop'
 $taskRoot = $PSScriptRoot
 $env:TEMP = Join-Path $taskRoot 'temp'
 $env:TMP = $env:TEMP
@@ -11,6 +11,12 @@ $currentHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $target).Hash.ToLowe
 if ($currentHash -eq $manifest.patchedSha256) { Write-Output '开屏已安装。'; exit 0 }
 if ($currentHash -ne $manifest.originalSha256 -and $currentHash -ne $manifest.previousPatchedSha256) { throw '应用资源已变化，已停止安装以保护现有版本。' }
 $prepared = Join-Path $taskRoot 'delivery\app.asar'
+if (-not (Test-Path -LiteralPath $prepared)) {
+  if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw '未找到 delivery\app.asar，且未检测到 Node.js。请安装 Node.js 18 或更高版本后重试（首次运行需要自动构建开屏安装包）。' }
+  Write-Output '未找到 delivery\app.asar，正在基于本机已安装的 DeepSeek Harness 自动构建开屏安装包……'
+  node (Join-Path $taskRoot 'build-package.mjs')
+  if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $prepared)) { throw '自动构建失败。请确认本机安装的 DeepSeek Harness 为对应的原始版本（脚本按 manifest 哈希校验版本一致性）。' }
+}
 if ((Get-FileHash -Algorithm SHA256 -LiteralPath $prepared).Hash.ToLowerInvariant() -ne $manifest.patchedSha256) { throw '开屏安装包校验失败。' }
 $backup = Join-Path $taskRoot 'backup\app.original.asar'
 if ((Get-FileHash -Algorithm SHA256 -LiteralPath $backup).Hash.ToLowerInvariant() -ne $manifest.originalSha256) { throw '原始资源备份校验失败。' }

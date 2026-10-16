@@ -4,7 +4,9 @@
 # 超过 GitHub 100MB 单文件限制的大文件目录
 backup/
 temp/
-delivery/
+# delivery 只排除大文件，manifest.json 是克隆用户自动构建的必需输入
+delivery/*
+!delivery/manifest.json
 
 # 系统文件
 Thumbs.db
