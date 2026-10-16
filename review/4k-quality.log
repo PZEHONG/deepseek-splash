@@ -1,0 +1,46 @@
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'D:\链接解析\results\7689378377203721211\live-photo-4k-repaired.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.12.102
+  Duration: 00:00:04.02, start: 0.000000, bitrate: 30188 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 3840x2160 [SAR 1:1 DAR 16:9], 30299 kb/s, 24 fps, 24 tbr, 12288 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      encoder         : Lavc62.28.102 libx264
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 2 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+Input #1, matroska,webm, from 'temp\harness-splash-4k.webm':
+  Metadata:
+    COMPATIBLE_BRANDS: isomiso2avc1mp41
+    MAJOR_BRAND     : isom
+    MINOR_VERSION   : 512
+    ENCODER         : Lavf62.12.102
+  Duration: 00:00:04.00, start: 0.000000, bitrate: 21855 kb/s
+  Stream #1:0: Video: vp9 (Profile 0), yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 3840x2160, SAR 1:1 DAR 16:9, 24 fps, 24 tbr, 1k tbn (default)
+    Metadata:
+      ENCODER         : Lavc62.28.102 libvpx-vp9
+      HANDLER_NAME    : VideoHandler
+      DURATION        : 00:00:04.000000000
+Stream mapping:
+  Stream #0:0 (h264) -> setpts:default
+  Stream #1:0 (vp9) -> setpts:default
+  ssim:default -> Stream #0:0 (wrapped_avframe)
+Press [q] to stop, [?] for help
+[Parsed_ssim_2 @ 000001f6fd2e3ec0] not matching timebases found between first input: 1/12288 and second input 1/1000, results may be incorrect!
+Output #0, null, to 'pipe:':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.12.102
+  Stream #0:0: Video: wrapped_avframe, yuv420p(tv, bt709/bt709/iec61966-2-1, progressive), 3840x2160 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 24 fps, 24 tbn
+    Metadata:
+      encoder         : Lavc62.28.102 wrapped_avframe
+frame=   23 fps=0.0 q=-0.0 size=N/A time=00:00:00.91 bitrate=N/A speed=1.75x elapsed=0:00:00.52    
+frame=   67 fps= 65 q=-0.0 size=N/A time=00:00:02.75 bitrate=N/A speed=2.66x elapsed=0:00:01.03    
+[Parsed_ssim_2 @ 000001f6fd2e3ec0] SSIM Y:0.990964 (20.440228) U:0.994174 (22.346383) V:0.994908 (22.931166) All:0.992156 (21.054818)
+[out#0/null @ 000001f6f926c400] video:40KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+frame=   96 fps= 68 q=-0.0 Lsize=N/A time=00:00:03.95 bitrate=N/A speed=2.79x elapsed=0:00:01.41    

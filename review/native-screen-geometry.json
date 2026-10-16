@@ -1,0 +1,24 @@
+﻿{
+    "screen":  {
+                   "height":  1600,
+                   "width":  2560
+               },
+    "expectedPixels":  {
+                           "height":  810,
+                           "width":  1440
+                       },
+    "ok":  true,
+    "client":  {
+                   "Left":  0,
+                   "Top":  0,
+                   "Right":  1439,
+                   "Bottom":  810
+               },
+    "window":  {
+                   "Left":  549,
+                   "Top":  359,
+                   "Right":  2010,
+                   "Bottom":  1180
+               },
+    "mode":  "Intro"
+}

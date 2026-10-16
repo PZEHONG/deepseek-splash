@@ -1,0 +1,44 @@
+{
+  "window": {
+    "x": 373,
+    "y": 239,
+    "width": 960,
+    "height": 541
+  },
+  "content": {
+    "x": 373,
+    "y": 239,
+    "width": 960,
+    "height": 540
+  },
+  "display": {
+    "x": 0,
+    "y": 0,
+    "width": 1707,
+    "height": 1067
+  },
+  "workArea": {
+    "x": 0,
+    "y": 0,
+    "width": 1707,
+    "height": 1019
+  },
+  "scaleFactor": 1.5,
+  "capture": {
+    "width": 1440,
+    "height": 810
+  },
+  "fullscreenFlag": false,
+  "displays": [
+    {
+      "id": 295510603,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1707,
+        "height": 1067
+      },
+      "scaleFactor": 1.5
+    }
+  ]
+}

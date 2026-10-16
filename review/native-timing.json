@@ -1,0 +1,68 @@
+{
+  "events": [
+    {
+      "name": "application-held",
+      "elapsedMs": 136
+    },
+    {
+      "name": "intro-shown",
+      "elapsedMs": 583,
+      "fullscreen": false,
+      "maximized": false,
+      "bounds": {
+        "x": 373,
+        "y": 239,
+        "width": 960,
+        "height": 541
+      },
+      "expectedBounds": {
+        "x": 373,
+        "y": 239,
+        "width": 960,
+        "height": 540
+      },
+      "contentBounds": {
+        "x": 373,
+        "y": 239,
+        "width": 960,
+        "height": 540
+      },
+      "displayBounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1707,
+        "height": 1067
+      },
+      "scaleFactor": 1.5
+    },
+    {
+      "name": "ui-ready",
+      "elapsedMs": 6891
+    },
+    {
+      "name": "application-shown",
+      "elapsedMs": 6911,
+      "ready": true,
+      "fullscreen": false,
+      "maximized": false,
+      "bounds": {
+        "x": 213,
+        "y": 99,
+        "width": 1280,
+        "height": 822
+      },
+      "initialBounds": {
+        "x": 213,
+        "y": 99,
+        "width": 1280,
+        "height": 822
+      },
+      "reason": "ready"
+    },
+    {
+      "name": "intro-closed",
+      "elapsedMs": 6934,
+      "reason": "ready"
+    }
+  ]
+}

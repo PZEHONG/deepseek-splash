@@ -1,0 +1,11 @@
+# GitHub 推送凭据（仅本地使用，不会提交）
+.env
+
+# 超过 GitHub 100MB 单文件限制的大文件目录
+backup/
+temp/
+delivery/
+
+# 系统文件
+Thumbs.db
+Desktop.ini

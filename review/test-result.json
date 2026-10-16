@@ -1,0 +1,78 @@
+{
+  "ok": true,
+  "geometry": {
+    "window": {
+      "x": 373,
+      "y": 239,
+      "width": 960,
+      "height": 541
+    },
+    "content": {
+      "x": 373,
+      "y": 239,
+      "width": 960,
+      "height": 540
+    },
+    "display": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "workArea": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1019
+    },
+    "scaleFactor": 1.5,
+    "capture": {
+      "width": 1440,
+      "height": 810
+    },
+    "fullscreenFlag": false,
+    "displays": [
+      {
+        "id": 295510603,
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1707,
+          "height": 1067
+        },
+        "scaleFactor": 1.5
+      }
+    ]
+  },
+  "initialApplicationBounds": {
+    "x": 213,
+    "y": 99,
+    "width": 1281,
+    "height": 821
+  },
+  "video": {
+    "time": 2.344567,
+    "width": 3840,
+    "height": 2160,
+    "muted": true,
+    "title": "DeepSeek Harness",
+    "playing": true,
+    "totalFrames": 60,
+    "droppedFrames": 0,
+    "fit": "cover"
+  },
+  "checks": [
+    "intro-initial-960x540-centered",
+    "application-original-window-size",
+    "manual-maximize-and-restore",
+    "autoplay",
+    "silent",
+    "3840x2160-4K",
+    "branding",
+    "immediate-stop-on-ready",
+    "main-hidden-until-ui-ready",
+    "no-video-overlap",
+    "escape-skip",
+    "missing-assets-fail-open"
+  ]
+}

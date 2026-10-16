@@ -1,0 +1,3 @@
+[21740:1012/215148.418:WARNING:content\browser\btm\btm_database.cc:128] Failed to initialize the DIPS SQLite database.
+(node:21740) electron: Failed to load URL: file:///D:/deepseek%E5%BC%80%E5%B1%8F/missing-assets/harness-splash.html with error: ERR_FILE_NOT_FOUND
+(Use `electron-preview --trace-warnings ...` to show where the warning was created)
