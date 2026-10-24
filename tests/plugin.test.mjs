@@ -78,6 +78,7 @@ for (const reason of ['escape', 'button', 'media-error', 'timeout', 'boot-failur
     if (reason === 'timeout') timers.forEach(fn => fn());
     if (reason === 'boot-failure') { win.document.querySelector('[data-dsh-boot-spinner]').remove(); await Promise.resolve(); }
     assert.equal(overlay(), null);
+    assert.equal(win.document.querySelector('[data-deepseek-splash-caption]'), null, 'Native caption styling must be released with the animation');
     dom.window.close();
   });
 }
@@ -87,8 +88,31 @@ test('reduced motion and autoplay rejection fail open', async () => {
     const { dom, overlay } = await setup(options);
     await Promise.resolve();
     assert.equal(overlay(), null);
+    assert.equal(dom.window.document.querySelector('[data-deepseek-splash-caption]'), null);
     dom.window.close();
   }
+});
+
+test('caption styling targets only the desktop theme probe while the splash exists', async () => {
+  const { dom, win, overlay } = await setup();
+  const root = win.document.documentElement;
+  root.dataset.windowsTitlebar = '';
+  const probe = win.document.createElement('span');
+  probe.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none;background-color:var(--dsw-specific-sidebar-fill);color:var(--dsw-alias-label-primary)';
+  const unrelated = win.document.createElement('span');
+  unrelated.style.color = 'red';
+  win.document.body.append(probe, unrelated);
+  const style = win.document.querySelector('[data-deepseek-splash-caption]');
+  assert.ok(style, 'Caption suppression must exist while the animation plays');
+  const selector = style.sheet.cssRules[0].selectorText;
+  assert.equal(probe.matches(selector), true);
+  assert.equal(unrelated.matches(selector), false);
+  assert.equal(win.document.body.style.length, 0, 'Application palette and user styles must remain untouched');
+  overlay().shadowRoot.querySelector('button').click();
+  assert.equal(probe.matches(selector), false);
+  assert.equal(style.isConnected, false);
+  assert.equal(unrelated.style.color, 'red');
+  dom.window.close();
 });
 
 test('repeated injection neither duplicates nor replays a dismissed intro', async () => {

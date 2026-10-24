@@ -3,7 +3,7 @@ export function mountSplash({ template, timeout = 15000 }) {
   if (window.__deepseekSplashMounted) return;
   window.__deepseekSplashMounted = true;
   if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-  let host, video, observer, timer;
+  let host, video, observer, timer, captionStyle;
   let closed = false;
   const onKey = event => { if (event.key === 'Escape') close(); };
   function close() {
@@ -15,6 +15,7 @@ export function mountSplash({ template, timeout = 15000 }) {
     window.removeEventListener('pagehide', close);
     if (video) { video.pause(); video.removeAttribute('src'); video.querySelector('source')?.removeAttribute('src'); video.load(); }
     host?.remove();
+    captionStyle?.remove();
   }
   function check() {
     const root = document.getElementById('root');
@@ -37,6 +38,13 @@ export function mountSplash({ template, timeout = 15000 }) {
     video.addEventListener('ended', close, { once: true });
     window.addEventListener('keydown', onKey);
     window.addEventListener('pagehide', close, { once: true });
+    // The desktop preload samples this hidden theme probe to color its native
+    // caption overlay. Make only that probe transparent while the intro exists;
+    // its head observer restores the current theme when this style is removed.
+    captionStyle = document.createElement('style');
+    captionStyle.dataset.deepseekSplashCaption = '';
+    captionStyle.textContent = '[data-windows-titlebar] body:has(> #deepseek-splash) > span[style*="--dsw-specific-sidebar-fill"][style*="--dsw-alias-label-primary"]{background-color:transparent!important;color:transparent!important}';
+    document.head.append(captionStyle);
     document.body.append(host);
     timer = setTimeout(close, timeout);
     observer = new MutationObserver(check);
