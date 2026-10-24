@@ -1,35 +1,54 @@
-# 标准插件安装
+# DeepSeek Harness 4K 开屏动画
 
-本项目新增标准 DSH bundle，复用现有 4K 开屏素材，在应用窗口内显示动画，无需修改 `app.asar` 或手动运行 PowerShell 安装脚本。
+**当前版本：1.0.2** · 插件直装 · 4K 动画 · 无需修改客户端
 
-## 地址安装
+为 DeepSeek Harness 添加 4 秒 4K 开屏动画。通过客户端插件界面安装，视频与海报随插件提供，无需克隆仓库、构建或运行安装脚本。
 
-在 DeepSeek Harness 的插件安装界面输入：
+![开屏动画预览](review/splash-preview.png)
 
-```text
-github:PZEHONG/deepseek-splash
-```
+## 插件直装
 
-如果安装界面要求 GitHub URL，输入 `https://github.com/PZEHONG/deepseek-splash`。安装完成后完全退出 DeepSeek Harness（包括托盘后台），再重新启动。
+1. 打开 DeepSeek Harness，进入左侧「插件」，打开插件安装入口。
+2. 输入以下地址并安装：
 
-命令行方式（Web profile）：
+   ```text
+   github:PZEHONG/deepseek-splash
+   ```
 
-```sh
-dsh plugin --profile web add github:PZEHONG/deepseek-splash
-```
+   如果安装界面要求 GitHub URL，使用：
 
-桌面版请使用客户端自己的插件安装入口，以便安装到桌面版使用的 profile。不要假定 Web profile 与桌面 profile 相同。
+   ```text
+   https://github.com/PZEHONG/deepseek-splash
+   ```
 
-## 播放行为
+3. 安装完成后，确认 `dsh-deepseek-splash` 已启用，版本为 **v1.0.2**，包含的组件显示「运行中」。
+4. 从系统托盘完全退出 DeepSeek Harness，再重新打开，即可看到开屏动画。
 
-- 在宿主返回应用页面后、前端插件加载期间显示现有动画；无法覆盖 Electron 启动到宿主页面返回之前的阶段。
-- 默认完整播放 4 秒动画后进入应用，界面就绪不会提前打断动画；点击“跳过”或按 Esc 可立即进入。应用在动画播放期间继续加载。
-- Windows 桌面版播放动画时，隐藏右上角最小化、最大化/还原和关闭按钮；动画结束、跳过或播放失败后，恢复应用当前主题的正常按钮。窗口尺寸和动画素材不变。
-- 播放失败、启动错误、系统偏好减少动态效果时直接显示界面；最多遮挡 15 秒。
-- 不改写客户端程序或用户数据。在插件管理中禁用或卸载本插件，再重启恢复默认启动。
-- 安装过旧版原生补丁的用户，应先使用下方旧方案的还原脚本恢复原版，避免出现两次开屏。标准插件不会自动修改旧版补丁。
+以下为 v1.0.2 插件已安装并运行的界面：
 
-## 本地开发验证
+![dsh-deepseek-splash v1.0.2 插件安装效果](docs/images/plugin-installed.png)
+
+如果已经安装过旧版原生补丁，请先按[旧版补丁说明](docs/legacy-native-patch.md#还原)还原原版，再安装插件，避免重复播放开屏。
+
+## 播放效果
+
+- **4K 素材**：3840×2160、24 fps、VP9 静音视频，保留现有动画和海报。
+- **完整播放**：默认播放完整 4 秒动画，应用同时在后台加载；视频结束后显示应用界面。
+- **简洁开屏**：Windows 桌面版播放期间隐藏右上角最小化、最大化/还原和关闭按钮；动画结束或跳过后恢复。
+- **随时跳过**：点击「跳过」或按 `Esc` 即可进入应用。播放失败、启动错误或系统偏好减少动态效果时直接显示界面，最多遮挡 15 秒。
+- **保留窗口设置**：动画显示在应用窗口内，不强制全屏或更改窗口尺寸。
+
+插件从宿主返回应用页面后开始显示，无法覆盖客户端进程启动到页面返回之前的阶段。动画结束时若应用仍未加载完成，会继续显示应用自身的加载界面。
+
+[观看完整动画](package/harness-splash.webm)
+
+## 禁用或卸载
+
+在 DeepSeek Harness 的插件管理中关闭或卸载 `dsh-deepseek-splash`，完全退出并重新启动应用，即可恢复默认启动效果。
+
+## 开发与验证
+
+插件使用原生 JavaScript，无编译步骤、安装脚本或运行时额外依赖。
 
 ```sh
 npm ci --ignore-scripts
@@ -37,74 +56,24 @@ npm test
 npm pack --dry-run
 ```
 
-插件为原生 JavaScript，无编译或安装脚本，运行时无额外依赖。包内包含视频和海报，用户安装时无需自行构建。兼容范围取决于宿主提供 `webserver/index-inject` 和 `connection.fetch.register` 接口；目前已通过本地 0.1.5-rc.2 的 Cordis/Connection 集成测试与 12 项自动测试。已在本机已安装的桌面插件中验证 4K 播放、标题栏按钮隐藏及恢复；详见 [验证记录](docs/plugin-validation.md)。
+Web profile 可使用命令行安装：
 
-以下保留旧版原生补丁说明。
-
----
-# DeepSeek Harness 开屏动画
-
-为 DeepSeek Harness 桌面应用注入 4K 开屏动画：应用启动时以 960×540 居中窗口播放 4 秒 3840×2160 VP9 静音动画，主界面就绪后立即无缝交接，不额外等待。
-
-![开屏动画预览](review/splash-preview.png)
-
-## 特性
-
-- **4K 品质**：直接由原始 4K 素材制作（3840×2160、24 fps、VP9、CRF 14），未缩放再放大，与原素材 SSIM 0.992156
-- **秒级交接**：主界面完成首帧绘制立即停止动画并显示应用；内置加载页在隐藏窗口中同时进行
-- **窗口化启动**：开屏约 960×540 居中，主界面恢复原始约 1280×820，最大化/还原/最小化/关闭按钮均可用
-- **原样打包**：仅注入开屏模块与 4 个资源文件，其余 11,468 个打包文件逐字节不变
-- **安全还原**：一键还原原版，D 盘新增缓存/日志/账号数据均保留
-
-## 实际安装效果
-
-安装后启动应用，开屏以居中普通窗口播放（非全屏）：
-
-![实际安装效果](review/native-windowed-desktop.png)
-
-动画全部 96 帧一览（[观看完整视频](package/harness-splash.webm)）：
-
-![帧序列](review/final-contact.jpg)
-
-## 快速开始（克隆用户）
-
-> 仓库不含 126MB 的 `app.asar`（超出 GitHub 单文件 100MB 限制），克隆后由脚本基于本机应用自动构建。
-
-1. 安装与 `delivery/manifest.json` 中 `originalSha256` 对应版本的 [DeepSeek Harness](https://deepseek.com)（脚本按哈希校验版本，不符会自动停止）
-2. 安装 [Node.js](https://nodejs.org/) 18 或更高版本
-3. 从系统托盘完全退出 DeepSeek Harness，然后运行：
-
-```powershell
-.\安装开屏.ps1
+```sh
+dsh plugin --profile web add github:PZEHONG/deepseek-splash
 ```
 
-脚本检测到缺少 `delivery/app.asar` 时会自动调用 `build-package.mjs`，基于本机原始应用生成安装包和备份，校验通过后完成安装。完全退出后再次启动即播放开屏。
+桌面版请使用客户端插件安装入口，以便安装到正确的 profile。
 
-## 还原
+已通过本地 0.1.5-rc.2 的 Cordis/Connection 集成测试与 12 项自动测试，并在本机桌面版验证 4K 播放及窗口按钮隐藏、恢复。兼容性依赖宿主提供 `webserver/index-inject` 和 `connection.fetch.register` 接口。详见[验证记录](docs/plugin-validation.md)。
 
-完全退出应用后运行：
+仓库仍保留[旧版原生补丁说明](docs/legacy-native-patch.md)，供旧版安装的用户查阅。
 
-```powershell
-.\还原原版.ps1
-```
+## 感谢与支持
 
-## 目录结构
+感谢你使用 DeepSeek Harness 开屏动画！每一次 Star、反馈和分享，都是对这个项目的支持。
 
-| 路径 | 说明 |
-| --- | --- |
-| `package/` | 开屏动画素材：视频、封面、HTML 文字层、加载模块 |
-| `build-package.mjs` | 打补丁构建脚本：向原始 `app.asar` 注入开屏模块 |
-| `安装开屏.ps1` | 一键安装（缺少产物时自动构建） |
-| `还原原版.ps1` | 一键还原原版 |
-| `delivery/manifest.json` | 版本哈希与构建元数据（版本校验依据） |
-| `review/` | 验证脚本、日志与实屏截图 |
-| `backup/`（本地生成） | 原始与应用安装前资源备份 |
-| `交付说明.md` | 详细交付与验证记录 |
+如果这个小插件让你的每次启动多了一份好心情，也欢迎自愿打赏，请我喝杯咖啡。感谢你的鼓励与支持！
 
-## 安全机制
-
-- 安装前按 SHA-256 校验本机应用版本、构建产物与原始备份，任一不符立即停止
-- 安装采用暂存 + 原子替换，替换前再次确认应用未重新启动
-- 应用自动更新可能覆盖开屏修改；版本变化时安装/还原脚本均会停止以保护新版本
-
-更多细节见 [交付说明.md](交付说明.md)。
+| 微信打赏 | 支付宝打赏 |
+| :---: | :---: |
+| <img src="docs/images/support-wechat.jpg" alt="微信打赏二维码" width="280"> | <img src="docs/images/support-alipay.jpg" alt="支付宝打赏二维码" width="280"> |
