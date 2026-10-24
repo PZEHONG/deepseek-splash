@@ -1,0 +1,15 @@
+{
+  "name": "dsh-deepseek-splash",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness 4K startup animation, installed as a standard plugin bundle",
+  "type": "module",
+  "main": "./plugin/index.mjs",
+  "exports": { ".": "./plugin/index.mjs", "./package.json": "./package.json" },
+  "repository": { "type": "git", "url": "git+https://github.com/PZEHONG/deepseek-splash.git" },
+  "keywords": ["dsh-plugin", "deepseek-harness", "splash"],
+  "engines": { "node": ">=22" },
+  "files": ["plugin/", "cordis.patch.yml", "package/harness-splash.html", "package/harness-splash.webm", "package/harness-poster.jpg"],
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } },
+  "scripts": { "test": "node --test tests/*.test.mjs" },
+  "devDependencies": { "jsdom": "^26.1.0" }
+}

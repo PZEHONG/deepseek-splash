@@ -1,3 +1,46 @@
+# 标准插件安装
+
+本项目新增标准 DSH bundle，复用现有 4K 开屏素材，在应用窗口内显示动画，无需修改 `app.asar` 或手动运行 PowerShell 安装脚本。
+
+## 地址安装
+
+在 DeepSeek Harness 的插件安装界面输入：
+
+```text
+github:PZEHONG/deepseek-splash
+```
+
+如果安装界面要求 GitHub URL，输入 `https://github.com/PZEHONG/deepseek-splash`。安装完成后完全退出 DeepSeek Harness（包括托盘后台），再重新启动。
+
+命令行方式（Web profile）：
+
+```sh
+dsh plugin --profile web add github:PZEHONG/deepseek-splash
+```
+
+桌面版请使用客户端自己的插件安装入口，以便安装到桌面版使用的 profile。不要假定 Web profile 与桌面 profile 相同。
+
+## 播放行为
+
+- 在宿主返回应用页面后、前端插件加载期间显示现有动画；无法覆盖 Electron 启动到宿主页面返回之前的阶段。
+- 界面准备完成、动画结束、点击“跳过”或按 Esc 时退出。
+- 播放失败、启动错误、系统偏好减少动态效果时直接显示界面；最多遮挡 15 秒。
+- 不改写客户端程序或用户数据。在插件管理中禁用或卸载本插件，再重启恢复默认启动。
+- 安装过旧版原生补丁的用户，应先使用下方旧方案的还原脚本恢复原版，避免出现两次开屏。标准插件不会自动修改旧版补丁。
+
+## 本地开发验证
+
+```sh
+npm ci --ignore-scripts
+npm test
+npm pack --dry-run
+```
+
+插件为原生 JavaScript，无编译或安装脚本，运行时无额外依赖。包内包含视频和海报，用户安装时无需自行构建。兼容范围取决于宿主提供 `webserver/index-inject` 和 `connection.fetch.register` 接口；目前已通过本地 0.1.5-rc.2 的 Cordis/Connection 集成测试与 11 项自动测试；客户端安装、重启及实际视频呈现尚待实测。详见 [验证记录](docs/plugin-validation.md)。
+
+以下保留旧版原生补丁说明。
+
+---
 # DeepSeek Harness 开屏动画
 
 为 DeepSeek Harness 桌面应用注入 4K 开屏动画：应用启动时以 960×540 居中窗口播放 4 秒 3840×2160 VP9 静音动画，主界面就绪后立即无缝交接，不额外等待。

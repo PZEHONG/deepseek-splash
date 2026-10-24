@@ -11,3 +11,8 @@ delivery/*
 # 系统文件
 Thumbs.db
 Desktop.ini
+
+# Plugin development dependencies and local package cache
+node_modules/
+.npm-cache/
+*.tgz
