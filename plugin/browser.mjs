@@ -3,15 +3,13 @@ export function mountSplash({ template, timeout = 15000 }) {
   if (window.__deepseekSplashMounted) return;
   window.__deepseekSplashMounted = true;
   if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
-  let host, video, observer, timer, frame, nextFrame;
+  let host, video, observer, timer;
   let closed = false;
   const onKey = event => { if (event.key === 'Escape') close(); };
   function close() {
     if (closed) return;
     closed = true;
     clearTimeout(timer);
-    cancelAnimationFrame(frame);
-    cancelAnimationFrame(nextFrame);
     observer?.disconnect();
     window.removeEventListener('keydown', onKey);
     window.removeEventListener('pagehide', close);
@@ -22,9 +20,8 @@ export function mountSplash({ template, timeout = 15000 }) {
     const root = document.getElementById('root');
     const boot = root?.querySelector('[data-dsh-boot]');
     if (boot && !boot.querySelector('[data-dsh-boot-spinner]')) return close();
-    if (root?.childElementCount && !boot && frame === undefined) {
-      frame = requestAnimationFrame(() => { nextFrame = requestAnimationFrame(close); });
-    }
+    // Let the workspace finish loading underneath, but keep the intro until
+    // the actual media ends (or the user explicitly skips it).
   }
   try {
     host = document.createElement('div');

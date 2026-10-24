@@ -10,7 +10,8 @@ const prefix = '/api/deepseek-splash/';
 const html = readFileSync(new URL('harness-splash.html', assetRoot), 'utf8');
 // Scope the original artwork to a shadow root; do not run the native-window script.
 const css = html.match(/<style>([\s\S]*?)<\/style>/i)[1]
-  .replace(/html,body/g, ':host').replace(/\bbody\b/g, ':host');
+  .replace(/html,body/g, ':host').replace(/\bbody\b/g, ':host')
+  + '\n.skip{animation:none}';
 const body = html.match(/<body>([\s\S]*?)<script>/i)[1]
   .replaceAll('harness-poster.jpg', prefix + 'harness-poster.jpg')
   .replaceAll('harness-splash.webm', prefix + 'harness-splash.webm');

@@ -1,6 +1,6 @@
 {
   "name": "dsh-deepseek-splash",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "DeepSeek Harness 4K startup animation, installed as a standard plugin bundle",
   "type": "module",
   "main": "./plugin/index.mjs",

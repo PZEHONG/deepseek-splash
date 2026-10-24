@@ -54,11 +54,14 @@ async function setup({ reduced = false, playReject = false } = {}) {
   return { dom, win, overlay, timers, row };
 }
 
-test('overlay closes on painted application readiness without removing the UI', async () => {
+test('ready application stays behind the intro until the full video ends', async () => {
   const { dom, win, overlay } = await setup();
   assert.ok(overlay());
   win.document.getElementById('root').innerHTML = '<button>New chat</button>';
   await new Promise(resolve => setTimeout(resolve, 75));
+  assert.ok(overlay(), 'UI readiness must not interrupt the four-second video');
+  const video = overlay().shadowRoot.querySelector('video');
+  video.dispatchEvent(new win.Event('ended'));
   assert.equal(overlay(), null);
   assert.equal(win.document.querySelector('#root button').textContent, 'New chat');
   dom.window.close();

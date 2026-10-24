@@ -14,7 +14,7 @@
 
 - No Electron or user-data modifications; preserve the existing 4K media.
 - No runtime dependencies or install scripts; package includes all required assets.
-- Fail open; 15-second maximum overlay lifetime; close immediately on mounted UI.
+- Fail open; 15-second maximum overlay lifetime; play the complete four-second video unless skipped or playback/boot fails.
 
 ## Review Focus
 
